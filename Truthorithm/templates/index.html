@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RealorNot</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f5f5f5;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      animation: fadeInBody 1s ease forwards;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 32, 39, 0.95);
+      color: #81c784;
+      padding: 25px 30px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-title {
+      flex: 1;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      margin-top: 70px;
+    }
+
+    .sidebar {
+      width: 25%;
+      background: rgba(15, 32, 39, 0.8);
+      padding: 30px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.4);
+      animation: slideInLeft 0.8s ease forwards;
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to   { transform: translateX(0); opacity: 1; }
+    }
+
+    .sidebar h2 {
+      font-size: 1.8rem;
+      color:rgb(32, 158, 164);
+      margin-bottom: 20px;
+    }
+
+    .recent-item {
+      margin-bottom: 15px;
+      font-size: 1rem;
+      color: #ccc;
+      padding: 8px;
+      border-radius: 5px;
+      background: #2a2a2a;
+      word-wrap: break-word;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .main {
+      width: 75%;
+      padding: 50px;
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      color: #4fc3f7;
+      animation: slideInDown 0.8s ease forwards;
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    textarea {
+      width: 70%;
+      height: 120px;
+      padding: 15px;
+      font-size: 1.1rem;
+      border: 2px solid #4fc3f7;
+      border-radius: 10px;
+      background: #2a2a2a;
+      color: #fff;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    textarea:focus {
+      border-color: #81c784;
+      outline: none;
+      box-shadow: 0 0 10px #81c78455;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      background-color: #4fc3f7;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #1f1f1f;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      animation: fadeIn 1.4s ease forwards;
+    }
+
+    button:hover {
+      background-color: #81c784;
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 2rem;
+      font-weight: bold;
+      animation: fadeInResult 0.8s ease forwards;
+    }
+
+    .typing {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #ccc;
+      animation: typing 1s steps(30, end) infinite alternate;
+    }
+
+    @keyframes typing {
+      from { opacity: 0.5; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInResult {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .faq-button {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      padding: 8px 18px;
+      background-color: #4fc3f7;
+      color: #1f1f1f;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      z-index: 1100;
+    }
+
+    .faq-button:hover {
+      background-color: #81c784;
+    }
+
+    .faq-modal {
+      display: none;
+      position: fixed;
+      top: 70px;
+      right: 30px;
+      width: 300px;
+      background: #2a2a2a;
+      border: 2px solid #4fc3f7;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      z-index: 2000;
+      color: #f5f5f5;
+    }
+
+    .faq-modal h3 {
+      margin-top: 0;
+      color: #81c784;
+    }
+
+    .faq-modal p {
+      font-size: 0.95rem;
+      margin: 10px 0;
+      color: #ddd;
+    }
+
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      color: #ccc;
+      font-weight: bold;
+    }
+
+    .close-btn:hover {
+      color: #fff;
+    }
+
+    footer {
+      background: #111;
+      color: #ccc;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="navbar-title">📰 RealorNot</div>
+  <button class="faq-button" onclick="toggleFAQ()">❓ FAQs</button>
+</div>
+
+<div class="container">
+  <div class="sidebar">
+    <h2>Recent Searches</h2>
+    {% for news in recent_news %}
+      <div class="recent-item">{{ news }}</div>
+    {% else %}
+      <p style="color:#777;">No searches yet!</p>
+    {% endfor %}
+  </div>
+
+  <div class="main">
+    <h1>📰 AI Fake News Detector</h1>
+    <form method="POST">
+      <textarea id="newsInput" name="news" required></textarea><br>
+      <button type="submit">🔍 Analyze Headline</button>
+    </form>
+
+    {% if prediction %}
+      <div class="typing">Analyzing with AI...</div>
+      <div class="result">{{ prediction }}</div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="faq-modal" id="faqModal">
+  <div>
+    <span class="close-btn" onclick="toggleFAQ()">✖</span>
+    <h3>FAQs</h3>
+    <p><strong>Q:</strong> How does this detector work?</p>
+    <p>A: It uses AI and machine learning to classify news headlines as real or fake.</p>
+    <p><strong>Q:</strong> Can it detect full articles?</p>
+    <p>A: Currently it analyzes only news headlines — full article support is coming soon!</p>
+    <p><strong>Q:</strong> Is my data private?</p>
+    <p>A: Yes — your searches stay local to your session.</p>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 AI Fake News Detector | Contact: <a href="mailto:thecodeholics2025@outlook.com" style="color:#4fc3f7;">thecodeholics2025@outlook.com</a>
+</footer>
+
+<script>
+  function toggleFAQ() {
+    const faq = document.getElementById('faqModal');
+    faq.style.display = faq.style.display === 'block' ? 'none' : 'block';
+  }
+
+  const textarea = document.getElementById("newsInput");
+  const placeholderText = "Type or paste a news headline here...";
+  let placeholderIndex = 0;
+
+  function animatePlaceholder() {
+    textarea.setAttribute("placeholder", placeholderText.substring(0, placeholderIndex));
+    placeholderIndex++;
+    if (placeholderIndex > placeholderText.length) {
+      placeholderIndex = 0;
+      textarea.setAttribute("placeholder", "");
+    }
+  }
+  setInterval(animatePlaceholder, 100);
+</script>
+
+</body>
+</html>
